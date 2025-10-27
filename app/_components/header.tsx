@@ -8,7 +8,7 @@ const Header = () => {
     <Card>
       <CardContent className="flex items-center justify-between p-5">
         <Image src="/logo.png" alt="FSW Barber" width={120} height={18} />
-        <Button size="icon" variant="outline">
+        <Button size="icon" variant="default">
           <MenuIcon />
         </Button>
       </CardContent>
