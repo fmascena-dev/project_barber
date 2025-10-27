@@ -9,12 +9,18 @@ import { Avatar, AvatarImage } from "./_components/ui/avatar"
 import Footer from "./_components/footer"
 import { db } from "./_lib/prisma"
 import BarberShopItem from "./_components/barbershop-item"
+import { Separator } from "./_components/ui/separator"
 
 export default async function Home() {
   const barbershops = await db.barbershop.findMany({})
+  const popularBarbershops = await db.barbershop.findMany({
+    orderBy: {
+      name: "desc",
+    },
+  })
 
   return (
-    <div>
+    <div className="flex flex-col">
       <Header />
       <div className="p-5">
         <h2 className="text-xl font-bold">Olá, Felipe!</h2>
@@ -27,32 +33,45 @@ export default async function Home() {
           </Button>
         </div>
 
-        <div className="mt-6 flex items-center gap-3">
-          <Button variant="outline">
-            <Image src="/cabelo.svg" alt="cabelo" width={12} height={12} />
+        <div className="mt-6 flex items-center gap-3 overflow-x-scroll [&::-webkit-scrollbar]:hidden">
+          <Button variant="outline" className="text-base">
+            <Image src="/cabelo.svg" alt="cabelo" width={16} height={16} />
             Cabelo
           </Button>
-          <Button variant="outline">
-            <Image src="/barba.svg" alt="barba" width={12} height={12} />
+          <Button variant="outline" className="text-base">
+            <Image src="/barba.svg" alt="barba" width={16} height={16} />
             Barba
           </Button>
-          <Button variant="outline">
+          <Button variant="outline" className="text-base">
             <Image
               src="/acabamento.svg"
               alt="acabamento"
-              width={12}
-              height={12}
+              width={16}
+              height={16}
             />
             Acabamento
           </Button>
-          <Button variant="outline">
+          <Button variant="outline" className="text-base">
             <Image
               src="/sobrancelha.svg"
               alt="sobrancelha"
-              width={12}
-              height={12}
+              width={16}
+              height={16}
             />
             Sobrancelha
+          </Button>
+          <Button variant="outline" className="text-base">
+            <Image src="/massagem.svg" alt="massagem" width={16} height={16} />
+            Massagem
+          </Button>
+          <Button variant="outline" className="text-base">
+            <Image
+              src="/hidratacao.svg"
+              alt="Hidratação"
+              width={16}
+              height={16}
+            />
+            Hidratação
           </Button>
         </div>
 
@@ -64,6 +83,8 @@ export default async function Home() {
             className="rounded-xl object-cover"
           />
         </div>
+
+        <Separator className="mt-6" />
 
         <h2 className="mb-3 mt-6 uppercase text-gray-500">Agendamentos</h2>
 
@@ -93,9 +114,20 @@ export default async function Home() {
           </CardContent>
         </CardTwo>
 
+        <Separator className="mt-6" />
+
         <h2 className="mb-3 mt-6 uppercase text-gray-500">Recomendados</h2>
         <div className="flex gap-4 overflow-auto [&::-webkit-scrollbar]:hidden">
           {barbershops.map((barbershop) => (
+            <BarberShopItem key={barbershop.id} barbershop={barbershop} />
+          ))}
+        </div>
+
+        <Separator className="mt-6" />
+
+        <h2 className="mb-3 mt-6 uppercase text-gray-500">Populares</h2>
+        <div className="flex gap-4 overflow-auto [&::-webkit-scrollbar]:hidden">
+          {popularBarbershops.map((barbershop) => (
             <BarberShopItem key={barbershop.id} barbershop={barbershop} />
           ))}
         </div>
