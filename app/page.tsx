@@ -36,7 +36,7 @@ export default async function Home() {
           {quickSearchOptions.map((option) => (
             <Button
               className="gap-2 text-base"
-              variant="outline"
+              variant="modify"
               key={option.title}
             >
               <Image

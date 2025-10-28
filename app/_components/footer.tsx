@@ -9,7 +9,7 @@ const Footer = () => {
           © 2023 Copyright{" "}
           <span className="font-bold text-primary">FSW Barber</span>
         </p>
-        <Image src="/logo.png" alt="FSW Barber" width={120} height={18} />
+        <Image src="/Logo.svg" alt="FSW Barber" width={120} height={18} />
       </CardFooter>
     </Card>
   )
