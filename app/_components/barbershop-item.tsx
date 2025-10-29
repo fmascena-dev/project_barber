@@ -12,7 +12,7 @@ interface BarberShopItemProps {
 
 const BarberShopItem = ({ barbershop }: BarberShopItemProps) => {
   return (
-    <Card className="min-w-[167px] rounded-2xl">
+    <Card className="min-w-[197px] rounded-2xl">
       <CardContentTwo className="px-2 pt-1">
         <div className="relative h-[159px] w-full">
           <Image

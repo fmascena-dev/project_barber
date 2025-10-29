@@ -7,7 +7,7 @@ export default function BookingItem() {
     <>
       <h2 className="mb-3 mt-6 uppercase text-gray-500">Agendamentos</h2>
 
-      <CardTwo className="">
+      <CardTwo>
         <CardContent className="flex justify-between p-0">
           {/* ESQUERDA */}
           <div className="flex flex-col gap-2 py-5 pl-5">
