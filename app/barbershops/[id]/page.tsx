@@ -43,7 +43,7 @@ const BarbershopPage = async ({ params }: BarbershopPageProps) => {
         <Button
           size="icon"
           variant="default"
-          className="absolute left-2 top-2"
+          className="absolute left-3 top-3"
           asChild
         >
           <Link href="/">
@@ -54,7 +54,7 @@ const BarbershopPage = async ({ params }: BarbershopPageProps) => {
         <Button
           size="icon"
           variant="default"
-          className="absolute right-2 top-2"
+          className="absolute right-3 top-3"
         >
           <MenuIcon />
         </Button>

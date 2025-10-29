@@ -29,6 +29,21 @@ const CardTwo = React.forwardRef<
 ))
 CardTwo.displayName = "CardTwo"
 
+const CardThree = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn(
+      "transition-border rounded-xl border bg-card text-card-foreground shadow duration-300 hover:border-primary",
+      className,
+    )}
+    {...props}
+  />
+))
+CardThree.displayName = "CardThree"
+
 const CardHeader = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
@@ -92,6 +107,7 @@ CardFooter.displayName = "CardFooter"
 export {
   Card,
   CardTwo,
+  CardThree,
   CardHeader,
   CardFooter,
   CardTitle,

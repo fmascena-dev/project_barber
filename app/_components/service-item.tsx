@@ -1,5 +1,5 @@
 import { BarbershopService } from "@prisma/client"
-import { CardTwo, CardContentTwo } from "./ui/card"
+import { CardThree, CardContentTwo } from "./ui/card"
 import Image from "next/image"
 import { Button } from "./ui/button"
 
@@ -9,9 +9,9 @@ interface ServiceItemProps {
 
 const ServiceItem = ({ service }: ServiceItemProps) => {
   return (
-    <CardTwo>
-      <CardContentTwo className="flex items-center gap-3 p-3">
-        <div className="min-w[110px] relative max-h-[110px] min-h-[110px] max-w-[110px]">
+    <CardThree>
+      <CardContentTwo className="flex w-full items-center gap-4 p-3">
+        <div className="relative max-h-[110px] min-h-[110px] min-w-[110px] max-w-[110px]">
           <Image
             alt={service.name}
             src={service.imageUrl}
@@ -20,11 +20,13 @@ const ServiceItem = ({ service }: ServiceItemProps) => {
           />
         </div>
 
-        <div className="space-y-2">
-          <h3 className="text-sm font-semibold">{service.name}</h3>
-          <p className="text-sm text-gray-400">{service.description}</p>
+        <div className="flex w-full flex-col gap-3">
+          <div className="flex flex-col gap-1">
+            <h3 className="text-sm font-semibold">{service.name}</h3>
+            <p className="mb-3 text-sm text-gray-400">{service.description}</p>
+          </div>
 
-          <div className="flex w-full items-center justify-between border border-red-400">
+          <div className="flex items-center justify-between">
             <p className="text-sm font-bold text-primary">
               {Intl.NumberFormat("pt-BR", {
                 style: "currency",
@@ -32,13 +34,13 @@ const ServiceItem = ({ service }: ServiceItemProps) => {
               }).format(Number(service.price))}
             </p>
 
-            <Button size="sm" variant="default">
+            <Button size="smTwo" variant="default">
               Reservar
             </Button>
           </div>
         </div>
       </CardContentTwo>
-    </CardTwo>
+    </CardThree>
   )
 }
 
