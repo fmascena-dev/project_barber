@@ -3,7 +3,6 @@ import Header from "./_components/header"
 import { Button } from "./_components/ui/button"
 import { Input } from "./_components/ui/input"
 import Image from "next/image"
-import Footer from "./_components/footer"
 import { db } from "./_lib/prisma"
 import BarberShopItem from "./_components/barbershop-item"
 import { Separator } from "./_components/ui/separator"
@@ -81,8 +80,6 @@ export default async function Home() {
           ))}
         </div>
       </div>
-
-      <Footer />
     </div>
   )
 }

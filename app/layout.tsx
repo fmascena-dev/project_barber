@@ -1,5 +1,8 @@
 import type { Metadata } from "next"
 import "./globals.css"
+import { Nunito } from "next/font/google"
+import Footer from "./_components/footer"
+import { Toaster } from "./_components/ui/sonner"
 
 export const metadata: Metadata = {
   title: "Project Barber",
@@ -9,6 +12,11 @@ export const metadata: Metadata = {
   },
 }
 
+const nunito = Nunito({
+  subsets: ["latin"],
+  weight: ["400", "600", "700"],
+})
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -16,7 +24,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR" className="dark">
-      <body className="antialiased">{children}</body>
+      <body className={nunito.className}>
+        {children} <Toaster /> <Footer />
+      </body>
     </html>
   )
 }
