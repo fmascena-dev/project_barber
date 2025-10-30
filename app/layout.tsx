@@ -3,6 +3,7 @@ import "./globals.css"
 import { Nunito } from "next/font/google"
 import Footer from "./_components/footer"
 import { Toaster } from "./_components/ui/sonner"
+import AuthProvider from "./_providers/auth"
 
 export const metadata: Metadata = {
   title: "Project Barber",
@@ -25,7 +26,11 @@ export default function RootLayout({
   return (
     <html lang="pt-BR" className="dark">
       <body className={nunito.className}>
-        {children} <Toaster /> <Footer />
+        <AuthProvider>
+          {children}
+          <Toaster />
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   )
