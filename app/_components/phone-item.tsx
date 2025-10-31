@@ -3,10 +3,7 @@
 import { SmartphoneIcon } from "lucide-react"
 import { Button } from "./ui/button"
 import { toast } from "sonner"
-
-interface PhoneItemProps {
-  phone: string
-}
+import { PhoneItemProps } from "../models/barber.interface"
 
 const PhoneItem = ({ phone }: PhoneItemProps) => {
   const handleCopyPhoneClick = (phone: string) => {

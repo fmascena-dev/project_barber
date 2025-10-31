@@ -1,7 +1,4 @@
-interface QuickSearchOption {
-  imageUrl: string
-  title: string
-}
+import { QuickSearchOption } from "../models/barber.interface"
 
 export const quickSearchOptions: QuickSearchOption[] = [
   {
