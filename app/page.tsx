@@ -1,28 +1,66 @@
+"use client"
+
 import { SearchIcon } from "lucide-react"
 import Header from "./_components/header"
 import { Button } from "./_components/ui/button"
 import { Input } from "./_components/ui/input"
 import Image from "next/image"
-import { db } from "./_lib/prisma"
-import BarberShopItem from "./_components/barbershop-item"
+import BarberShopItem, {
+  BarberShopItemSkeleton,
+} from "./_components/barbershop-item"
 import { Separator } from "./_components/ui/separator"
-import BookingItem from "./_components/booking-item"
+import BookingItem, { BookingItemSkeleton } from "./_components/booking-item"
 import { quickSearchOptions } from "./_constants/search"
+import { useSession } from "next-auth/react"
+import { useEffect, useState } from "react"
+import { Barbershop } from "@prisma/client"
 
-export default async function Home() {
-  const barbershops = await db.barbershop.findMany({})
-  const popularBarbershops = await db.barbershop.findMany({
-    orderBy: {
-      name: "desc",
-    },
-  })
+export default function Home() {
+  const { data: session } = useSession()
+  const [barbershops, setBarbershops] = useState<Barbershop[]>([])
+  const [popularBarbershops, setPopularBarbershops] = useState<Barbershop[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true)
+      try {
+        // Aumenta o delay artificial para 3 segundos para dar tempo de ver a transição
+        await new Promise((resolve) => setTimeout(resolve, 3000))
+
+        const [barbershopsData, popularBarbershopsData] = await Promise.all([
+          fetch("/api/barbershops").then((res) => res.json()),
+          fetch("/api/barbershops/popular").then((res) => res.json()),
+        ])
+        setBarbershops(barbershopsData)
+        setPopularBarbershops(popularBarbershopsData)
+      } catch (error) {
+        console.error("Error fetching data:", error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+    fetchData()
+  }, [])
 
   return (
     <div className="flex flex-col">
       <Header />
       <div className="p-5">
-        <h2 className="text-xl font-bold">Olá, Felipe!</h2>
-        <p>Domingo, 19 de Outubro</p>
+        <h2 className="text-xl font-bold">
+          Olá,{" "}
+          {session?.user?.name
+            ? session.user.name.split(" ").slice(0, 2).join(" ")
+            : "Visitante"}
+          !
+        </h2>
+        <p>
+          {new Date().toLocaleDateString("pt-BR", {
+            weekday: "long",
+            day: "numeric",
+            month: "long",
+          })}
+        </p>
 
         <div className="mt-6 flex items-center gap-2">
           <Input placeholder="Search" />
@@ -60,24 +98,67 @@ export default async function Home() {
 
         <Separator className="mt-6" />
 
-        <BookingItem />
+        <h2 className="mb-3 mt-6 uppercase text-gray-500">Agendamentos</h2>
+        <div className="transition-all duration-1000">
+          {isLoading ? (
+            <div className="animate-fade-in opacity-0">
+              <BookingItemSkeleton />
+            </div>
+          ) : (
+            <div className="animate-fade-in opacity-0">
+              <BookingItem />
+            </div>
+          )}
+        </div>
 
         <Separator className="mt-6" />
 
         <h2 className="mb-3 mt-6 uppercase text-gray-500">Recomendados</h2>
-        <div className="flex gap-4 overflow-auto [&::-webkit-scrollbar]:hidden">
-          {barbershops.map((barbershop) => (
-            <BarberShopItem key={barbershop.id} barbershop={barbershop} />
-          ))}
+        <div className="flex gap-4 overflow-auto transition-all duration-1000 [&::-webkit-scrollbar]:hidden">
+          <div
+            className={`flex gap-4 transition-all duration-1000 ${isLoading ? "opacity-100" : "opacity-0"}`}
+          >
+            {isLoading && (
+              <>
+                <BarberShopItemSkeleton />
+                <BarberShopItemSkeleton />
+                <BarberShopItemSkeleton />
+              </>
+            )}
+          </div>
+          <div
+            className={`flex gap-4 transition-all duration-1000 ${!isLoading ? "opacity-100" : "opacity-0"}`}
+          >
+            {!isLoading &&
+              barbershops.map((barbershop) => (
+                <BarberShopItem key={barbershop.id} barbershop={barbershop} />
+              ))}
+          </div>
         </div>
 
         <Separator className="mt-6" />
 
         <h2 className="mb-3 mt-6 uppercase text-gray-500">Populares</h2>
-        <div className="flex gap-4 overflow-auto [&::-webkit-scrollbar]:hidden">
-          {popularBarbershops.map((barbershop) => (
-            <BarberShopItem key={barbershop.id} barbershop={barbershop} />
-          ))}
+        <div className="flex gap-4 overflow-auto transition-all duration-1000 [&::-webkit-scrollbar]:hidden">
+          <div
+            className={`flex gap-4 transition-all duration-1000 ${isLoading ? "opacity-100" : "opacity-0"}`}
+          >
+            {isLoading && (
+              <>
+                <BarberShopItemSkeleton />
+                <BarberShopItemSkeleton />
+                <BarberShopItemSkeleton />
+              </>
+            )}
+          </div>
+          <div
+            className={`flex gap-4 transition-all duration-1000 ${!isLoading ? "opacity-100" : "opacity-0"}`}
+          >
+            {!isLoading &&
+              popularBarbershops.map((barbershop) => (
+                <BarberShopItem key={barbershop.id} barbershop={barbershop} />
+              ))}
+          </div>
         </div>
       </div>
     </div>

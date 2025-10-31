@@ -59,6 +59,15 @@ const config: Config = {
       boxShadow: {
         custom: "0px 0px 10px 1px rgba(129, 98, 255, 0.6)",
       },
+      keyframes: {
+        fadeIn: {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+      },
+      animation: {
+        "fade-in": "fadeIn 1.5s ease-in-out forwards",
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],

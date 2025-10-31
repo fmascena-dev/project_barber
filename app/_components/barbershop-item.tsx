@@ -1,19 +1,21 @@
-import { Barbershop } from "@prisma/client"
+// import { Barbershop } from "@prisma/client"
 import { Card, CardContentTwo } from "./ui/card"
 import Image from "next/image"
 import { Badge } from "./ui/badge"
 import { StarIcon } from "lucide-react"
 import { Button } from "./ui/button"
 import Link from "next/link"
+import { BarberShopItemProps } from "../models/barber.interface"
+import { SkeletonCard } from "./skeleton-card"
 
-interface BarberShopItemProps {
-  barbershop: Barbershop
+export const BarberShopItemSkeleton = () => {
+  return <SkeletonCard />
 }
 
 const BarberShopItem = ({ barbershop }: BarberShopItemProps) => {
   return (
-    <Card className="min-w-[197px] rounded-2xl">
-      <CardContentTwo className="px-2 pt-1">
+    <Card className="min-w-[200px] rounded-2xl">
+      <CardContentTwo className="px-2 pt-2">
         <div className="relative h-[159px] w-full">
           <Image
             alt={barbershop.name}

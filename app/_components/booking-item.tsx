@@ -1,12 +1,15 @@
 import { Avatar, AvatarImage } from "./ui/avatar"
 import { Badge } from "./ui/badge"
 import { CardTwo, CardContent } from "./ui/card"
+import { SkeletonCard } from "./skeleton-card"
+
+export const BookingItemSkeleton = () => {
+  return <SkeletonCard />
+}
 
 export default function BookingItem() {
   return (
     <>
-      <h2 className="mb-3 mt-6 uppercase text-gray-500">Agendamentos</h2>
-
       <CardTwo>
         <CardContent className="flex justify-between p-0">
           {/* ESQUERDA */}

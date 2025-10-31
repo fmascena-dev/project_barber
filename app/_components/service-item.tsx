@@ -1,10 +1,11 @@
-import { BarbershopService } from "@prisma/client"
 import { CardThree, CardContentTwo } from "./ui/card"
 import Image from "next/image"
 import { Button } from "./ui/button"
+import { ServiceItemProps } from "../models/barber.interface"
+import { SkeletonCard } from "./skeleton-card"
 
-interface ServiceItemProps {
-  service: BarbershopService
+export const ServiceItemSkeleton = () => {
+  return <SkeletonCard />
 }
 
 const ServiceItem = ({ service }: ServiceItemProps) => {
