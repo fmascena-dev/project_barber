@@ -1,9 +1,7 @@
 "use client"
 
-import { SearchIcon } from "lucide-react"
 import Header from "./_components/header"
 import { Button } from "./_components/ui/button"
-import { Input } from "./_components/ui/input"
 import Image from "next/image"
 import BarberShopItem, {
   BarberShopItemSkeleton,
@@ -14,6 +12,7 @@ import { quickSearchOptions } from "./_constants/search"
 import { useSession } from "next-auth/react"
 import { useEffect, useState } from "react"
 import { Barbershop } from "@prisma/client"
+import Search from "./_components/search"
 
 export default function Home() {
   const { data: session } = useSession()
@@ -26,7 +25,7 @@ export default function Home() {
       setIsLoading(true)
       try {
         // Aumenta o delay artificial para 3 segundos para dar tempo de ver a transição
-        await new Promise((resolve) => setTimeout(resolve, 3000))
+        await new Promise((resolve) => setTimeout(resolve, 2000))
 
         const [barbershopsData, popularBarbershopsData] = await Promise.all([
           fetch("/api/barbershops").then((res) => res.json()),
@@ -62,11 +61,8 @@ export default function Home() {
           })}
         </p>
 
-        <div className="mt-6 flex items-center gap-2">
-          <Input placeholder="Search" />
-          <Button>
-            <SearchIcon />
-          </Button>
+        <div className="mt-6">
+          <Search />
         </div>
 
         <div className="mt-6 flex items-center gap-3 overflow-x-scroll [&::-webkit-scrollbar]:hidden">
