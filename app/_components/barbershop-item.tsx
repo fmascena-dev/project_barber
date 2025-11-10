@@ -1,4 +1,3 @@
-// import { Barbershop } from "@prisma/client"
 import { Card, CardContentTwo } from "./ui/card"
 import Image from "next/image"
 import { Badge } from "./ui/badge"
@@ -13,6 +12,7 @@ export const BarberShopItemSkeleton = () => {
 }
 
 const BarberShopItem = ({ barbershop }: BarberShopItemProps) => {
+  // console.log('ID da Barbearia:', barbershop.id, 'Nome:', barbershop.name);
   return (
     <Card className="min-w-[200px] rounded-2xl">
       <CardContentTwo className="px-2 pt-2">

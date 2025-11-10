@@ -18,8 +18,9 @@ export interface QuickSearchOption {
 }
 
 export interface BarbershopPageProps {
-  params: {
+  searchParams: {
     id: string
+    search?: string
   }
   include: {
     services: true
