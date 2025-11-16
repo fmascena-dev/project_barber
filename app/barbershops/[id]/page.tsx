@@ -1,115 +1,111 @@
-"use client"
+import PhoneItem from "@/app/_components/phone-item"
+import ServiceItem from "@/app/_components/service-item"
+import SidebarSheet from "@/app/_components/sidebar-sheet"
+import { Button } from "@/app/_components/ui/button"
+import { Sheet, SheetTrigger } from "@/app/_components/ui/sheet"
+import { db } from "@/app/_lib/prisma"
+import { ChevronLeftIcon, MapPinIcon, MenuIcon, StarIcon } from "lucide-react"
+import Image from "next/image"
+import Link from "next/link"
+import { notFound } from "next/navigation"
 
-import { useSearchParams } from "next/navigation"
-import { useEffect, useState } from "react"
-import { Barbershop } from "@prisma/client"
-import { SearchIcon } from "lucide-react"
-import Header from "../../_components/header"
-import { Button } from "../../_components/ui/button"
-import { Input } from "../../_components/ui/input"
-import BarberShopItem, {
-  BarberShopItemSkeleton,
-} from "../../_components/barbershop-item"
+interface BarbershopPageProps {
+  params: {
+    id: string
+  }
+}
 
-export default function BarbershopsPage() {
-  const searchParams = useSearchParams()
-  const search = searchParams.get("search")
-  const [barbershops, setBarbershops] = useState<Barbershop[]>([])
-  const [isLoading, setIsLoading] = useState(true)
+const BarbershopPage = async ({ params }: BarbershopPageProps) => {
+  const barbershop = await db.barbershop.findUnique({
+    where: {
+      id: params.id,
+    },
+    include: {
+      services: true,
+    },
+  })
 
-  useEffect(() => {
-    let isMounted = true
-    console.log("=== COMPONENT EFFECT START ===")
-    console.log("Search param:", search)
-
-    const fetchBarbershops = async () => {
-      setIsLoading(true)
-      try {
-        console.log("Fetching data from API...")
-        const response = await fetch(`/api/barbershops?search=${search || ""}`)
-        const data = await response.json()
-
-        console.log("Data received from API:", data.length, "items")
-        console.log("Received barbershops:")
-        data.forEach((b: Barbershop) => {
-          console.log(`- ${b.name} (ID: ${b.id})`)
-        })
-
-        // Só atualiza o estado se o componente ainda estiver montado
-        if (isMounted) {
-          // Remove possíveis duplicatas antes de atualizar o estado
-          const uniqueData = data.filter(
-            (barbershop: Barbershop, index: number, self: Barbershop[]) =>
-              index === self.findIndex((b) => b.id === barbershop.id),
-          )
-
-          console.log("After component filtering:", uniqueData.length, "items")
-          console.log("Final barbershops to render:")
-          uniqueData.forEach((b: Barbershop) => {
-            console.log(`- ${b.name} (ID: ${b.id})`)
-          })
-
-          setBarbershops(uniqueData)
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error)
-      } finally {
-        if (isMounted) {
-          setIsLoading(false)
-        }
-      }
-      console.log("=== COMPONENT EFFECT END ===\n")
-    }
-
-    fetchBarbershops()
-
-    // Cleanup function
-    return () => {
-      isMounted = false
-    }
-  }, [search])
+  if (!barbershop) {
+    return notFound()
+  }
 
   return (
-    <div className="flex flex-col gap-4 p-5">
-      <Header />
-
-      <div className="mt-6 flex items-center gap-2">
-        <Input
-          id="search-barbershops"
-          name="search"
-          placeholder="Busque por barbearias..."
-          value={search || ""}
-          disabled
+    <div>
+      {/* IMAGEM */}
+      <div className="relative h-[250px] w-full">
+        <Image
+          alt={barbershop.name}
+          src={barbershop?.imageUrl}
+          fill
+          className="object-cover"
         />
-        <Button variant="default" disabled>
-          <SearchIcon size={20} />
+
+        <Button
+          size="icon"
+          variant="secondary"
+          className="absolute left-4 top-4"
+          asChild
+        >
+          <Link href="/">
+            <ChevronLeftIcon />
+          </Link>
         </Button>
+
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button
+              size="icon"
+              variant="outline"
+              className="absolute right-4 top-4"
+            >
+              <MenuIcon />
+            </Button>
+          </SheetTrigger>
+          <SidebarSheet />
+        </Sheet>
       </div>
 
-      <h2 className="mb-3 text-gray-400">
-        {search ? `Resultados para "${search}"` : "Todas as barbearias"}
-      </h2>
+      {/* TÍTULO */}
+      <div className="border-b border-solid p-5">
+        <h1 className="mb-3 text-xl font-bold">{barbershop.name}</h1>
+        <div className="mb-2 flex items-center gap-2">
+          <MapPinIcon className="text-primary" size={18} />
+          <p className="text-sm">{barbershop?.address}</p>
+        </div>
 
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {isLoading && (
-          <>
-            <BarberShopItemSkeleton />
-            <BarberShopItemSkeleton />
-            <BarberShopItemSkeleton />
-          </>
-        )}
+        <div className="flex items-center gap-2">
+          <StarIcon className="fill-primary text-primary" size={18} />
+          <p className="text-sm">5,0 (499 avaliações)</p>
+        </div>
+      </div>
 
-        {!isLoading &&
-          barbershops.map((barbershop) => (
-            <BarberShopItem key={barbershop.id} barbershop={barbershop} />
+      {/* DESCRIÇÃO */}
+      <div className="space-y-2 border-b border-solid p-5">
+        <h2 className="text-xs font-bold uppercase text-gray-400">Sobre nós</h2>
+        <p className="text-justify text-sm">{barbershop?.description}</p>
+      </div>
+
+      {/* SERVIÇOS */}
+      <div className="space-y-3 border-b border-solid p-5">
+        <h2 className="text-xs font-bold uppercase text-gray-400">Serviços</h2>
+        <div className="space-y-3">
+          {barbershop.services.map((service) => (
+            <ServiceItem
+              key={service.id}
+              service={JSON.parse(JSON.stringify(service))}
+            />
           ))}
+        </div>
+      </div>
 
-        {!isLoading && barbershops.length === 0 && (
-          <p className="text-center text-gray-400">
-            Nenhuma barbearia encontrada para a sua busca.
-          </p>
-        )}
+      {/* CONTATO */}
+      <div className="space-y-3 p-5">
+        {barbershop.phones.map((phone, index) => (
+          <PhoneItem key={index} phone={phone} />
+        ))}
       </div>
     </div>
   )
 }
+
+export default BarbershopPage
