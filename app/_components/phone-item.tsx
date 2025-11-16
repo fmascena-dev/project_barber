@@ -13,12 +13,11 @@ const PhoneItem = ({ phone }: PhoneItemProps) => {
 
   return (
     <div className="flex justify-between" key={phone}>
-      {/* ESQUERDA */}
       <div className="flex items-center gap-2">
         <SmartphoneIcon color="#8162FF" />
         <p className="text-sm">{phone}</p>
       </div>
-      {/* DIREITA */}
+
       <Button
         variant="default"
         size="smTwo"

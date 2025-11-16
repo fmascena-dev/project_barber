@@ -12,7 +12,6 @@ export const BarberShopItemSkeleton = () => {
 }
 
 const BarberShopItem = ({ barbershop }: BarberShopItemProps) => {
-  // console.log('ID da Barbearia:', barbershop.id, 'Nome:', barbershop.name);
   return (
     <Card className="min-w-[200px] rounded-2xl">
       <CardContentTwo className="px-2 pt-2">

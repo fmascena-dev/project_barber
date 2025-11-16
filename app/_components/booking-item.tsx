@@ -12,7 +12,6 @@ export default function BookingItem() {
     <>
       <CardTwo>
         <CardContent className="flex justify-between p-0">
-          {/* ESQUERDA */}
           <div className="flex flex-col gap-2 py-5 pl-5">
             <Badge className="w-fit text-sm" variant="secondary">
               Confirmado
@@ -27,7 +26,6 @@ export default function BookingItem() {
             </div>
           </div>
 
-          {/* DIREITA */}
           <div className="flex flex-col items-center justify-center border-l-[1px] border-solid px-6">
             <p className="text-lg">Outubro</p>
             <p className="text-2xl">19</p>
