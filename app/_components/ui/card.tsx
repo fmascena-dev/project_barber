@@ -8,7 +8,10 @@ const Card = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("border bg-card text-card-foreground shadow", className)}
+    className={cn(
+      "border-b border-[#8162FF] bg-card text-card-foreground shadow",
+      className,
+    )}
     {...props}
   />
 ))
@@ -21,7 +24,7 @@ const CardTwo = React.forwardRef<
   <div
     ref={ref}
     className={cn(
-      "rounded-xl border bg-card text-card-foreground shadow",
+      "rounded-xl border border-[#8162FF] bg-card text-card-foreground shadow",
       className,
     )}
     {...props}
@@ -43,6 +46,21 @@ const CardThree = React.forwardRef<
   />
 ))
 CardThree.displayName = "CardThree"
+
+const CardFour = React.forwardRef<
+  HTMLDivElement,
+  React.HTMLAttributes<HTMLDivElement>
+>(({ className, ...props }, ref) => (
+  <div
+    ref={ref}
+    className={cn(
+      "border-t border-[#8162FF] bg-card text-card-foreground shadow",
+      className,
+    )}
+    {...props}
+  />
+))
+CardFour.displayName = "CardFour"
 
 const CardHeader = React.forwardRef<
   HTMLDivElement,
@@ -108,6 +126,7 @@ export {
   Card,
   CardTwo,
   CardThree,
+  CardFour,
   CardHeader,
   CardFooter,
   CardTitle,

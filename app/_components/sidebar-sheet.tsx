@@ -79,14 +79,21 @@ export default function SidebarSheet() {
 
       <div className="flex flex-col gap-2 border-b border-solid py-5">
         <SheetClose asChild>
-          <Button className="justify-start gap-2" variant="ghost" asChild>
+          <Button
+            className="justify-start gap-2 hover:bg-[#8162FF]/20"
+            variant="ghost"
+            asChild
+          >
             <Link href="/">
               <HomeIcon size={18} />
               Início
             </Link>
           </Button>
         </SheetClose>
-        <Button className="justify-start gap-2" variant="ghost">
+        <Button
+          className="justify-start gap-2 hover:bg-[#8162FF]/20"
+          variant="ghost"
+        >
           <CalendarIcon size={18} />
           Agendamentos
         </Button>
@@ -95,7 +102,11 @@ export default function SidebarSheet() {
       <div className="flex flex-col gap-2 border-b border-solid py-5">
         {quickSearchOptions.map((option) => (
           <SheetClose key={option.title} asChild>
-            <Button className="justify-start gap-2" variant="ghost" asChild>
+            <Button
+              className="justify-start gap-2 hover:bg-[#8162FF]/20"
+              variant="ghost"
+              asChild
+            >
               <Link href={`/barbershops?service=${option.title}`}>
                 <Image
                   alt={option.title}
@@ -113,7 +124,7 @@ export default function SidebarSheet() {
       <div className="flex flex-col gap-2 py-5">
         <Button
           variant="ghost"
-          className="justify-start gap-2"
+          className="justify-start gap-2 hover:bg-[#8162FF]/20"
           onClick={handleLogoutClick}
         >
           <LogOutIcon size={18} />

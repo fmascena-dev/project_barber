@@ -26,7 +26,7 @@ export default function BookingItem() {
             </div>
           </div>
 
-          <div className="flex flex-col items-center justify-center border-l-[1px] border-solid px-6">
+          <div className="flex flex-col items-center justify-center border-l border-[#8162FF] px-6">
             <p className="text-lg">Outubro</p>
             <p className="text-2xl">19</p>
             <p className="text-lg">20:00</p>

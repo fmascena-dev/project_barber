@@ -1,9 +1,9 @@
 import Image from "next/image"
-import { Card, CardFooter } from "./ui/card"
+import { CardFooter, CardFour } from "./ui/card"
 
 const Footer = () => {
   return (
-    <Card className="px-5 py-6">
+    <CardFour className="px-5 py-6">
       <CardFooter className="flex justify-between text-gray-400">
         <p>
           © 2023 Copyright{" "}
@@ -11,7 +11,7 @@ const Footer = () => {
         </p>
         <Image src="/Logo.svg" alt="FSW Barber" width={120} height={18} />
       </CardFooter>
-    </Card>
+    </CardFour>
   )
 }
 

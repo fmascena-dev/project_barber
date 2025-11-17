@@ -13,6 +13,7 @@ import { useSession } from "next-auth/react"
 import { useEffect, useState } from "react"
 import { Barbershop } from "@prisma/client"
 import Search from "./_components/search"
+import { capitalizeFirstLetter } from "./utils/dateFormatter"
 
 export default function Home() {
   const { data: session } = useSession()
@@ -20,11 +21,18 @@ export default function Home() {
   const [popularBarbershops, setPopularBarbershops] = useState<Barbershop[]>([])
   const [isLoading, setIsLoading] = useState(true)
 
+  const dateOptions: Intl.DateTimeFormatOptions = {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+  }
+  const rawDateString = new Date().toLocaleDateString("pt-BR", dateOptions)
+  const formattedDate = capitalizeFirstLetter(rawDateString)
+
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true)
       try {
-        // Aumenta o delay artificial para 3 segundos para dar tempo de ver a transição
         await new Promise((resolve) => setTimeout(resolve, 2000))
 
         const [barbershopsData, popularBarbershopsData] = await Promise.all([
@@ -47,19 +55,13 @@ export default function Home() {
       <Header />
       <div className="p-5">
         <h2 className="text-xl font-bold">
-          Olá,{" "}
+          <span className="text-primary">Olá</span>,{" "}
           {session?.user?.name
             ? session.user.name.split(" ").slice(0, 2).join(" ")
             : "Visitante"}
           !
         </h2>
-        <p>
-          {new Date().toLocaleDateString("pt-BR", {
-            weekday: "long",
-            day: "numeric",
-            month: "long",
-          })}
-        </p>
+        <p className="text-gray-500">{formattedDate}</p>
 
         <div className="mt-6">
           <Search />
