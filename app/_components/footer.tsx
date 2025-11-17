@@ -1,5 +1,6 @@
 import Image from "next/image"
 import { CardFooter, CardFour } from "./ui/card"
+import Link from "next/link"
 
 const Footer = () => {
   return (
@@ -9,7 +10,9 @@ const Footer = () => {
           © 2023 Copyright{" "}
           <span className="font-bold text-primary">FSW Barber</span>
         </p>
-        <Image src="/Logo.svg" alt="FSW Barber" width={120} height={18} />
+        <Link href="/">
+          <Image src="/Logo.svg" alt="FSW Barber" width={120} height={15} />
+        </Link>
       </CardFooter>
     </CardFour>
   )

@@ -10,6 +10,7 @@ export interface PhoneItemProps {
 
 export interface ServiceItemProps {
   service: BarbershopService
+  barbershop: Pick<Barbershop, "name">
 }
 
 export interface QuickSearchOption {
